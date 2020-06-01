@@ -12,10 +12,28 @@
 <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 <!-- Create an element where the map will take place -->
 <body>
-<div class="container">
-    <svg id="svg"></svg>
+    <div class="container-fluid" style="height: 80%; width: 100%;">
+        <div class="row" >
+          <div class="col-sm-2" style="background-color: red; height: 100%;">
+            One of three columns
+          </div>
+          <div class="col-sm-8" style="background-color: blue; height: 100%;">
+            <svg id="svg" viewBox="0 0 500 500"></svg>
+          </div>
+          <div class="col-sm-2" style="background-color: green; height: 100%;">
+            One of three columns
+          </div>
+        </div>
+      </div>
+<!-- <div class="container">
+    <div id="canvas" style="width: 90%; height: 100vh; background-color: green;">
+        <svg id="svg"></svg>
+    </div>
+    <div id="country_display" style="width: 10%; height: 100vh; background-color: blueviolet;">
+        hola
+    </div>
     <div id="tooltip" display="none" style="position: absolute; display: none;"></div>
-<div>
+<div> -->
     <script>
     // The svg
     var svg = d3.select("svg")
@@ -26,11 +44,11 @@
     // Map and projection
     var projection = d3.geoMercator()
         .center([0,0])                // GPS of location to zoom on
-        .scale(120)                       // This is like the zoom
+        .scale(1)                       // This is like the zoom
         //.translate([ width/2, height/2 ])
     
     // Load external data and boot
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", function(data){
+    d3.json("data/map/world.geojson", function(data){
     
     //    var data_germany = Object.assign({},data)
     //    var data_rest = Object.assign({},data)
@@ -50,12 +68,16 @@
             .classed("svg-path", true)
             .attr("id", function(d) { return d.id; })
             .on("mouseover", function() {
-                console.log(this.id + ' ' + event.clientX.toString() + ' ' + event.clientY.toString())	
-                let tooltip = document.getElementById("tooltip");
-                tooltip.innerHTML = this.id;
-                tooltip.style.display = "block";
-                tooltip.style.left = event.clientX - 50 + 'px';
-                tooltip.style.top = event.clientY - 50 + 'px';
+                if (event.clientX===undefined && event.clientY===undefined){
+                    console.log(this.id)
+                }else{
+                    console.log(this.id + ' ' + event.clientX.toString() + ' ' + event.clientY.toString())	
+                    let tooltip = document.getElementById("tooltip");
+                    tooltip.innerHTML = this.__data__.properties.name;
+                    tooltip.style.display = "block";
+                    tooltip.style.left = event.clientX - 50 + 'px';
+                    tooltip.style.top = event.clientY - 50 + 'px';	   
+                }
             })
             //.on("mouseout", function() {
             //    tooltip.style.display = "none";
