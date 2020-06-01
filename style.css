@@ -1,0 +1,22 @@
+html, body { margin:0; padding:0; overflow:hidden; position: fixed; width: 100%; height: 100%;}
+#svg{
+    margin: 0;
+}
+.svg-path {
+    fill: grey;
+    stroke: black;
+    stroke-width: 1px;
+    transition: all 1s ease-out;
+}
+
+.svg-path:hover {
+    fill: red;
+    stroke-width: 0px;
+}
+
+#tooltip {
+    background: white;
+    border: 1px solid black;
+    font-size: 30px;
+  }
+
